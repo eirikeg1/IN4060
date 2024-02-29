@@ -1,0 +1,90 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sim: <http://www.ifi.uio.no/IN3060/simpsons#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fam: <http://www.ifi.uio.no/IN3060/family#> .
+
+# Classes
+# In the RDFS entailment patterns the first is:
+# If S contains `any IRI aaa in D` then S RDFS entails recognizing D `aaa rdf:type rdfs:Datatype .`
+# Therefore I added the rdfs:Datatype to the classes in the top of the hierarchy, to make sure the 
+# entailment pattern is satisfied, even though `rdf:Datatype` was never mentioned in the assignment.
+
+fam:Family a rdfs:Class ;
+    rdfs:subClassOf rdfs:Datatype .
+
+fam:Person a rdfs:Class ;
+    rdfs:subClassOf rdfs:Datatype .
+
+fam:Man a rdfs:Class ;
+    rdfs:subClassOf fam:Person .
+
+fam:Woman a rdfs:Class ;
+    rdfs:subClassOf fam:Person .
+
+fam:Gender a rdfs:Class ;
+    rdfs:subClassOf rdfs:Datatype .
+
+fam:Female a rdfs:Class ;
+    rdfs:subClassOf fam:Gender .
+
+fam:Male a rdfs:Class ;
+    rdfs:subClassOf fam:Gender .
+
+
+# Properties
+
+
+fam:isRelativeOf a rdf:Property ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Person .
+
+fam:hasSibling a rdf:Property ;
+    rdfs:subPropertyOf fam:isRelativeOf ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Person .
+
+fam:hasBrother a rdf:Property ;
+    rdfs:subPropertyOf fam:hasSibling ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Man .
+
+fam:hasSister a rdf:Property ;
+    rdfs:subPropertyOf fam:hasSibling ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Woman .
+
+fam:hasParent a rdf:Property ;
+    rdfs:subPropertyOf fam:isRelativeOf ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Person .
+
+fam:hasMother a rdf:Property ;
+    rdfs:subPropertyOf fam:hasParent ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Woman .
+
+fam:hasFather a rdf:Property ;
+    rdfs:subPropertyOf fam:hasParent ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Man .
+
+fam:hasSpouse a rdf:Property ;
+    rdfs:subPropertyOf fam:isRelativeOf ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Person .
+
+fam:hasFamilyMember a rdf:Property ;
+    rdfs:subPropertyOf fam:isRelativeOf ;
+    rdfs:domain fam:Family ;
+    rdfs:range fam:Person .
+
+fam:hasGender a rdf:Property ;
+    rdfs:domain fam:Person ;
+    rdfs:range fam:Gender .
+
+
+
+
+
